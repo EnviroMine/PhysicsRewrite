@@ -74,7 +74,6 @@ public class PhysicsHandler implements Runnable
 			PhysicsUpdate update = iterator.next();
 			if (update.delayTicks <= 0) {
 				update.performUpdate(this);
-				iterator.remove();
 				updateLocations.remove(update.coords);
 			} else {
 				update.delayTicks--;

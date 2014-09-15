@@ -71,7 +71,6 @@ public class PhysicsThreadController
 		Iterator<EntitySpawn> ite = tempSpawns.iterator();
 		while (ite.hasNext()) {
 			ite.next().go();
-			ite.remove();
 		}
 		
 	}
@@ -83,7 +82,6 @@ public class PhysicsThreadController
 		Iterator<BlockUpdate> ite = tempBlockUpdates.iterator();
 		while (ite.hasNext()) {
 			ite.next().go();
-			ite.remove();
 		}
 	}
 	
