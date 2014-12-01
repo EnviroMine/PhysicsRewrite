@@ -23,7 +23,8 @@ public class PhysicsHandler implements Runnable
 	/** The world object for this handler */
 	public final World world;
 	
-	public PhysicsHandler(World world) {
+	public PhysicsHandler(World world)
+	{
 		this.world = world;
 	}
 	
@@ -34,14 +35,17 @@ public class PhysicsHandler implements Runnable
 		{
 			boolean dupe = false;
 			Iterator<Coords> ite = updateLocations.iterator();
-			while (ite.hasNext()) {
-				if (ite.next().equals(update.coords)) {
+			while (ite.hasNext())
+			{
+				if (ite.next().equals(update.coords))
+				{
 					dupe = true;
 					break;
 				}
 			}
 			
-			if (!dupe) {
+			if (!dupe)
+			{
 				this.updates.add(update);
 				this.updateLocations.add(update.coords);
 				//System.out.println("Scheduled update at " + update.coords.x + ", " + update.coords.y + ", " + update.coords.z);
@@ -50,7 +54,8 @@ public class PhysicsHandler implements Runnable
 	}
 	
 	/** Returns true if the size of the update list is > 0 */
-	public boolean hasUpdates() {
+	public boolean hasUpdates()
+	{
 		return this.updates.size() > 0;
 	}
 	
@@ -68,14 +73,16 @@ public class PhysicsHandler implements Runnable
 		Set<PhysicsUpdate> tempUpdates = PhysicsThreadController.cloneSet(this.updates);
 		this.updates.clear();
 		
-		Iterator <PhysicsUpdate> iterator = tempUpdates.iterator();
+		Iterator<PhysicsUpdate> iterator = tempUpdates.iterator();
 		while (iterator.hasNext())
 		{
 			PhysicsUpdate update = iterator.next();
-			if (update.delayTicks <= 0) {
+			if (update.delayTicks <= 0)
+			{
 				update.performUpdate(this);
 				updateLocations.remove(update.coords);
-			} else {
+			} else
+			{
 				update.delayTicks--;
 				this.updates.add(update);
 			}
@@ -85,7 +92,8 @@ public class PhysicsHandler implements Runnable
 		{
 			this.updateLocations.clear();
 			Iterator<PhysicsUpdate> ite = this.updates.iterator();
-			while (ite.hasNext()) {
+			while (ite.hasNext())
+			{
 				this.updateLocations.add(ite.next().coords);
 			}
 		}

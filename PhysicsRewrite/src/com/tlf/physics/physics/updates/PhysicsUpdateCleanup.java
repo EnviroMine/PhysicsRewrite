@@ -15,16 +15,10 @@ import com.tlf.physics.physics.helper.BlockUpdate;
 public class PhysicsUpdateCleanup extends PhysicsUpdate
 {
 	public PhysicsUpdateCleanup(World world, int x, int y, int z) {
-		this(new Coords(world, x, y, z), 0);
-	}
-	public PhysicsUpdateCleanup(World world, int x, int y, int z, int delayTicks) {
-		this(new Coords(world, x, y, z), delayTicks);
+		this(new Coords(world, x, y, z));
 	}
 	public PhysicsUpdateCleanup(Coords coords) {
-		this(coords, 0);
-	}
-	public PhysicsUpdateCleanup(Coords coords, int delayTicks) {
-		super(coords, coords.copy(), delayTicks);
+		super(coords, coords.copy(), 0);
 	}
 	
 	@Override

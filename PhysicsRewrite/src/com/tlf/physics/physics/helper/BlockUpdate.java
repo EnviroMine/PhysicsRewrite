@@ -9,6 +9,7 @@ import net.minecraft.init.Blocks;
 
 import com.tlf.physics.helper.Coords;
 
+/** Used to perform thread-safe block updates */
 public class BlockUpdate
 {
 	/** The coordinates to set the block at */
