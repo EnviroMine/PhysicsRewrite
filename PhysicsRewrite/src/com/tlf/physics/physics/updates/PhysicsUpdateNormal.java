@@ -37,37 +37,37 @@ public class PhysicsUpdateNormal extends PhysicsUpdate
 		this(new Coords(world, x, y, z), causedBy, delayTicks);
 	}
 	
-	public PhysicsUpdateNormal(Coords coords)
+	public PhysicsUpdateNormal(Coords pos)
 	{
-		this(coords, 0);
+		this(pos, 0);
 	}
 	
-	public PhysicsUpdateNormal(Coords coords, Coords causedBy)
+	public PhysicsUpdateNormal(Coords pos, Coords causedBy)
 	{
-		this(coords, causedBy, 0);
+		this(pos, causedBy, 0);
 	}
 	
-	public PhysicsUpdateNormal(Coords coords, int delayTicks)
+	public PhysicsUpdateNormal(Coords pos, int delayTicks)
 	{
-		this(coords, coords.copy(), delayTicks);
+		this(pos, pos.copy(), delayTicks);
 	}
 	
-	public PhysicsUpdateNormal(Coords coords, Coords causedBy, int delayTicks)
+	public PhysicsUpdateNormal(Coords pos, Coords causedBy, int delayTicks)
 	{
-		super(coords, causedBy, delayTicks);
+		super(pos, causedBy, delayTicks);
 	}
 	
 	/** Returns true if the block specified by this update isn't air */
 	private boolean isValidBlock()
 	{
-		return this.coords.getBlock() != Blocks.air;
+		return this.pos.getBlock() != Blocks.air;
 	}
 	
 	/** Returns true if the block specified by this update is supported */
 	//TODO make more advanced
 	private boolean isSupported()
 	{
-		Block[][][] neighbors = this.coords.getNeighbors();
+		Block[][][] neighbors = this.pos.getNeighbors();
 		
 		for (int i = 0; i < 3; i++)
 		{
@@ -89,10 +89,10 @@ public class PhysicsUpdateNormal extends PhysicsUpdate
 	{
 		if (this.isValidBlock() && !this.isSupported())
 		{
-			EntityExtendedFallingBlock fallingBlock = new EntityExtendedFallingBlock(this.coords);
+			EntityExtendedFallingBlock fallingBlock = new EntityExtendedFallingBlock(this.pos);
 			
-			PhysicsThreadController.instance.scheduleEntitySpawn(new EntitySpawn(this.coords.world, fallingBlock));
-			handler.scheduleUpdate(new PhysicsUpdateCleanup(coords.copy()));
+			PhysicsThreadController.instance.scheduleEntitySpawn(new EntitySpawn(this.pos.world, fallingBlock));
+			handler.scheduleUpdate(new PhysicsUpdateCleanup(pos.copy()));
 			this.scheduleSurroundings(handler, 0); //TODO
 		}
 	}

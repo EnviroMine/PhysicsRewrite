@@ -14,11 +14,11 @@ public class EntityExtendedFallingBlock extends EntityFallingBlock
 {
 	private TileEntity te;
 	
-	public EntityExtendedFallingBlock(Coords coords)
+	public EntityExtendedFallingBlock(Coords pos)
 	{
-		super(coords.world, coords.x+0.5F, coords.y+0.5F, coords.z+0.5F, coords.getBlock(), coords.getMetadata());
-		if (coords.hasTileEntity()) {
-			this.te = coords.getAndRemoveTileEntity();
+		super(pos.world, pos.x+0.5F, pos.y+0.5F, pos.z+0.5F, pos.getBlock(), pos.getMetadata());
+		if (pos.hasTileEntity()) {
+			this.te = pos.getAndRemoveTileEntity();
 		}
 	}
 	

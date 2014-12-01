@@ -18,11 +18,11 @@ public class PhysicsUpdateSurroundings extends PhysicsUpdate
 	public PhysicsUpdateSurroundings(World world, int x, int y, int z, int delayTicks) {
 		this(new Coords(world, x, y, z), delayTicks);
 	}
-	public PhysicsUpdateSurroundings(Coords coords) {
-		this(coords, 0);
+	public PhysicsUpdateSurroundings(Coords pos) {
+		this(pos, 0);
 	}
-	public PhysicsUpdateSurroundings(Coords coords, int delayTicks) {
-		super(coords, coords.copy(), delayTicks);
+	public PhysicsUpdateSurroundings(Coords pos, int delayTicks) {
+		super(pos, pos.copy(), delayTicks);
 	}
 	
 	@Override

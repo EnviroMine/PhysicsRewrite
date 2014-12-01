@@ -31,13 +31,13 @@ public class PhysicsHandler implements Runnable
 	/** Schedules an update to be performed later – only works on server-side */
 	public void scheduleUpdate(PhysicsUpdate update)
 	{
-		if (!update.coords.world.isRemote && (update.coords.world.provider.dimensionId == this.world.provider.dimensionId))
+		if (!update.pos.world.isRemote && (update.pos.world.provider.dimensionId == this.world.provider.dimensionId))
 		{
 			boolean dupe = false;
 			Iterator<Coords> ite = updateLocations.iterator();
 			while (ite.hasNext())
 			{
-				if (ite.next().equals(update.coords))
+				if (ite.next().equals(update.pos))
 				{
 					dupe = true;
 					break;
@@ -47,7 +47,7 @@ public class PhysicsHandler implements Runnable
 			if (!dupe)
 			{
 				this.updates.add(update);
-				this.updateLocations.add(update.coords);
+				this.updateLocations.add(update.pos);
 				//System.out.println("Scheduled update at " + update.coords.x + ", " + update.coords.y + ", " + update.coords.z);
 			}
 		}
@@ -80,7 +80,7 @@ public class PhysicsHandler implements Runnable
 			if (update.delayTicks <= 0)
 			{
 				update.performUpdate(this);
-				updateLocations.remove(update.coords);
+				updateLocations.remove(update.pos);
 			} else
 			{
 				update.delayTicks--;
@@ -94,7 +94,7 @@ public class PhysicsHandler implements Runnable
 			Iterator<PhysicsUpdate> ite = this.updates.iterator();
 			while (ite.hasNext())
 			{
-				this.updateLocations.add(ite.next().coords);
+				this.updateLocations.add(ite.next().pos);
 			}
 		}
 		

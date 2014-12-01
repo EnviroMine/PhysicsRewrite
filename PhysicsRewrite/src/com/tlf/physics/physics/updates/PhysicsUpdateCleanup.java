@@ -17,12 +17,12 @@ public class PhysicsUpdateCleanup extends PhysicsUpdate
 	public PhysicsUpdateCleanup(World world, int x, int y, int z) {
 		this(new Coords(world, x, y, z));
 	}
-	public PhysicsUpdateCleanup(Coords coords) {
-		super(coords, coords.copy(), 0);
+	public PhysicsUpdateCleanup(Coords pos) {
+		super(pos, pos.copy(), 0);
 	}
 	
 	@Override
 	public void performUpdate(PhysicsHandler handler) {
-		PhysicsThreadController.instance.scheduleBlockUpdate(new BlockUpdate(this.coords.copy()));
+		PhysicsThreadController.instance.scheduleBlockUpdate(new BlockUpdate(this.pos.copy()));
 	}
 }

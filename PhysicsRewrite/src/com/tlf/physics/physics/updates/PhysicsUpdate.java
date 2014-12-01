@@ -13,7 +13,7 @@ import com.tlf.physics.physics.PhysicsHandler;
 public abstract class PhysicsUpdate
 {
 	/** The location of this update */
-	public final Coords coords;
+	public final Coords pos;
 	/** The location that caused this update - used to prevent update loops (update A causing update B causing update C in the location of update A)*/
 	public final Coords causedBy;
 	/** The number of update cycles until this update triggers */
@@ -25,11 +25,11 @@ public abstract class PhysicsUpdate
 	public PhysicsUpdate(World world, int x, int y, int z, Coords causedBy, int delayTicks) {
 		this(new Coords(world, x, y, z), causedBy, delayTicks);
 	}
-	public PhysicsUpdate(Coords coords, Coords causedBy) {
-		this(coords, causedBy, 0);
+	public PhysicsUpdate(Coords pos, Coords causedBy) {
+		this(pos, causedBy, 0);
 	}
-	public PhysicsUpdate(Coords coords, Coords causedBy, int delayTicks) {
-		this.coords = coords;
+	public PhysicsUpdate(Coords pos, Coords causedBy, int delayTicks) {
+		this.pos = pos;
 		this.causedBy = causedBy;
 		this.delayTicks = delayTicks;
 	}
@@ -46,14 +46,14 @@ public abstract class PhysicsUpdate
 				for (int k = -1; k < 2; k++) {
 					if (!(i == 0 && j == 0 && k == 0))
 					{
-						int x = this.coords.x + i;
-						int y = this.coords.y + j;
-						int z = this.coords.z + k;
+						int x = this.pos.x + i;
+						int y = this.pos.y + j;
+						int z = this.pos.z + k;
 						
-						Coords nextCoords = new Coords(this.coords.world, x, y, z);
+						Coords nextCoords = new Coords(this.pos.world, x, y, z);
 						
-						if (nextCoords != this.causedBy) {
-							handler.scheduleUpdate(new PhysicsUpdateNormal(this.coords.world, x, y, z, this.coords.copy(), delay));
+						if (!nextCoords.equals(this.causedBy)) {
+							handler.scheduleUpdate(new PhysicsUpdateNormal(nextCoords, this.pos.copy(), delay));
 						}
 					}
 				}
