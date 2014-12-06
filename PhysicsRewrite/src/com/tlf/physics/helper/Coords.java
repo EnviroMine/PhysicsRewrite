@@ -8,6 +8,8 @@ import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
+import net.minecraftforge.common.util.ForgeDirection;
+
 /** Provides easy XYZ coord handling, as well as some methods to make world manipulation easier */
 public class Coords
 {
@@ -49,7 +51,15 @@ public class Coords
 	}
 	/** Sets the block at this location to the specified block */
 	public void setBlock(Block block) {
-		this.world.setBlock(this.x, this.y, this.z, block);
+		this.setBlockWithMetadata(block, 0);
+	}
+	/** Sets the block and metadata at this location to the specified values */
+	public void setBlockWithMetadata(Block block, int meta) {
+		this.world.setBlock(this.x, this.y, this.z, block, meta, 2);
+	}
+	/** */
+	public boolean isBlockSideSolid(ForgeDirection dir) {
+		return this.getBlock().isSideSolid(this.world, this.x, this.y, this.z, dir);
 	}
 	/** Sets the block at this location to air */
 	public void setAir() {
@@ -79,6 +89,22 @@ public class Coords
 		te.validate();
 		return te;
 	}
+	/** Marks the block as requiring an update */
+	public void markForUpdate(boolean requireServer) {
+		if (!requireServer || !this.world.isRemote) {
+			this.world.markBlockForUpdate(this.x, this.y, this.z);
+		}
+	}
+	
+	public Coords getCoordsInDir(ForgeDirection dir)
+	{
+		return new Coords(this.world, x+dir.offsetX, y+dir.offsetY, z+dir.offsetZ);
+	}
+	
+	public Coords getCoordsOppositeDir(ForgeDirection dir)
+	{
+		return this.getCoordsInDir(dir.getOpposite());
+	}
 	
 	@Override
 	public boolean equals(Object obj)
@@ -96,5 +122,11 @@ public class Coords
 	/** Returns a copy of this object */
 	public Coords copy() {
 		return new Coords(this.world, this.x, this.y, this.z);
+	}
+	
+	@Override
+	public String toString()
+	{
+		return String.format("(%s: %s, %s, %s)", this.world.provider.dimensionId, this.x, this.y, this.z);
 	}
 }
