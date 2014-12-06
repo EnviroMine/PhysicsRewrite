@@ -131,6 +131,13 @@ public class PhysicsThreadController
 	/** Creates a duplicate of the specified set */
 	public static <E> Set<E> cloneSet(Set<E> set)
 	{
-		return new HashSet<E>(set);
+		Set<E> out = new HashSet<E>();
+		
+		for (E e : set)
+		{
+			out.add(e);
+		}
+		
+		return out;
 	}
 }
